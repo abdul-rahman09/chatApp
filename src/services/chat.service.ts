@@ -5,7 +5,7 @@ import { Observable } from 'rxjs'
   providedIn: 'root'
 })
 export class ChatService {
-	SERVER_URL = 'http://localhost:3000';
+	SERVER_URL = 'http://localhost:3001';
 	private socket;
 
   constructor() {

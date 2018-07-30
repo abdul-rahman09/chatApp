@@ -7,7 +7,7 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-  
+  console.log("Connected");
   socket.on('join',function(data){
   	socket.join(data.room);
   	//socket.broadcast.to(data.room).emit('new user joined',{user:data.user, message:'has joined this room' });
