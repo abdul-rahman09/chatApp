@@ -12,20 +12,16 @@ import {ChatService} from '../../services/chat.service'
 export class LoginComponent implements OnInit {
   search:string = '';
   selectedRoom:string = ''; 
-	user: string = '';
+	user: string = 'abc';
 	room: string = '';
 	disable:boolean = false;
 	message;
 	_room: string = '';
 	messageArray:Array<{user:String,message:String }> = [];
-  allMessages : Array<Array<{user:String,message:String}>> =[]; 
+  //allMessages : Array<Array<{user:String,message:String}>> =[]; 
   rooms:Array<String>= [];
   roomsDisplayed:Array<String> = [];
-  total_popups = 0;
-  popups = [];
-
-
-
+  show: boolean = false;
 
   constructor(private chat: ChatService) {
   	this.chat.newUserJoined()
@@ -36,20 +32,22 @@ export class LoginComponent implements OnInit {
         .subscribe(data=>this.rooms.push(data));    
     this.chat.left()
         .subscribe(data=>this.messageArray.push(data));
+        this.user = this.user + Math.floor(Math.random() * 100) + 1 ;        
    }
 
+
    join(){
-    if(this.selectedRoom == '' || this.user == ''){
-      return;
-    }
-   	this.disable = true;
-   	this.chat.join({user:this.user, room:this.room});
+     for (let i = 0; i < this.rooms.length; ++i) {
+      this.chat.join({user:this.user, room:this.rooms[i]}); 
+     }
+
    }
    leave(){
    	this.chat.leave({user:this.user, room:this.room});
    }
    sendMessage(){
    	this.chat.sendMessage({user:this.user, room:this.room, message:this.message});
+    this.message = '';
    }
    addRoom(){
    	this.chat.addroom(this._room);
@@ -72,10 +70,9 @@ export class LoginComponent implements OnInit {
     this.rooms.push('14');
     this.rooms.push('15');
 
+    this.join();
   }
-
   searching() {
-    console.log(this.search);
     let found:boolean=false;
     this.roomsDisplayed = [];
     for (let j in this.rooms) {
@@ -88,8 +85,14 @@ export class LoginComponent implements OnInit {
       this.roomsDisplayed.push('Not found');
     }
   }
-  select(temp){
+  close(){
+    this.show = false;
+    //this.leave();
+  }
+  showPopup(temp){
     this.selectedRoom = temp;
     this.room = temp;
+    this.show = true;
+    this.join();
   }
 }

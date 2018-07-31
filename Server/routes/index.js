@@ -4,9 +4,32 @@ var http = require('http').Server(express);
 var io = require('socket.io')(http);
 
 /* GET home page. */
+var json = {
+"employees":[
+    {"firstName":"John", "lastName":"Doe"}, 
+    {"firstName":"Anna", "lastName":"Smith"},
+    {"firstName":"Peter", "lastName":"Jones"}
+]
+};
+
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Hello' });
+  res.json(json);
 });
+router.post('/:id', function(req, res, next) {
+  json.findById(req.params.id, function(err, bear) {
+    if (err)
+      res.send(err);
+    res.json(bear);
+  });
+ res.json(json.employees.firstName);
+});
+router.post('/hello', function(req, res, next) {
+  res.json({ message: 'Bear created!'+ req.body.name });
+});
+router.put('/hello', function(req, res, next) {
+  res.json({ message: 'Bear created!'+ req.body.name });
+});
+
 
 io.on('connection', function(socket){
   console.log("connected");
@@ -21,7 +44,7 @@ io.on('connection', function(socket){
   	io.in(data.room).emit('left',{user:data.user, message:'has left this room' });
   });
   socket.on('message',function(data){
-    io.in(data.room).emit('new message', {user:data.user, message:data.message});
+    io.in(data.room).emit('new message', {user:data.user,room:data.room, message:data.message});
   });
   socket.on('addroom',function(data){
     io.emit('roomadded', data);
