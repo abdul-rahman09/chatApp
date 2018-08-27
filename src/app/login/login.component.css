@@ -1,12 +1,16 @@
-.body{
+.body {
     background: #dcdee1;
     border: 5px solid white;
 }
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  padding: 5px;
+}
 .sidenav{
-	height: 600px;
+	height: calc(100vh - 100px);
 	background-color: #dcdee1; 
 	overflow-y: scroll;
 	overflow-x: hidden;
+	position: fixed;
 }
 .sidenav ul {
 	list-style: none;
@@ -24,8 +28,6 @@
 }
 .sidenav .field {
 	height: 45px;
-	margin-top: 10px;
-	margin-bottom: 5px;
 }
 .handicon{
 	display:none;
@@ -41,18 +43,25 @@
     outline: none;
 }
 .chat-box{
-	position: absolute;
-	right: 20px;
+	position: fixed;
+	right: 222px;
 	bottom: 0px;
 	background: white;
 	width: 300px;
+	height: 300px;
 	border-radius: 5px 5px 0px 0px;
 }
 .chat-head{
+
 	width: inherit;
 	height: 30px;
 	background: #5054b4;
 	border-radius: 5px 5px 0px 0px;
+}
+.close {
+	right: 5px;
+	position: absolute;
+	margin: auto;
 }
 .chat-head h6{
 	color: white;
@@ -66,33 +75,33 @@
 	margin: 10px;
 }
 .chat-body{
-	height: 355px;
+	height: 300px;
 	width: inherit;
 	overflow: auto;
-	margin-bottom: 45px;
 }
 .chat-text{
-	position: fixed;
-	bottom: 0px;
+	position: absolute;
 	height: 45px;
+	bottom: 1px;
 	width: inherit;
 }
 .chat-text textarea{
-	width: inherit;
-	height: inherit; 
+	height: 100%;
+	width: 100%;
 	box-sizing: border-box;
 	border: 1px solid #bdc3c7;
-	padding: 10px;
 	resize: none;
 }
 .chat-text textarea:active, .chat-text textarea:focus, .chat-text textarea:hover{
 	border-color: royalblue;
 }
 .msg-send{
+    word-wrap: break-word;
 	background: #2ecc71;
 }
 .msg-receive{
-	background: #3498db;
+    word-wrap: break-word;
+    background: #3498db;
 }
 .msg-send, .msg-receive{
 	width: 200px;
@@ -108,7 +117,7 @@
 	content: '';
 	width: 0px;
 	height: 0px;
-	position: absolute;
+	position: relative;
 	border: 15px solid;
 	border-color: transparent #3498db transparent transparent;
 	left: -29px;
@@ -122,7 +131,7 @@
 	border: 15px solid;
 	border-color: transparent transparent transparent #2ecc71;
 	right: -29px;
-	top: 7px;
+	bottom: -7px;
 }
 .msg-receive:hover, .msg-send:hover{
 	opacity: .9;
